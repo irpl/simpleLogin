@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account</title>
+  </head>
+  <body>
+    <h1>Hey <span id="username"></span></h1>
+    <input id="logout" type="button" value="logout" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function() {
+        if (!(localStorage.getItem("logStatus") === "success"))
+          window.location.href = "/error.html";
+        else {
+          $("#username").text(localStorage.getItem("username"));
+        }
+      });
+      $("#logout").click(function() {
+        localStorage.setItem("logStatus", undefined);
+        localStorage.setItem("username", undefined);
+        window.location.href = "/";
+      });
+    </script>
+  </body>
+</html>

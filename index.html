@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <span>username</span>
+      <input type="text" name="" id="user" />
+    </div>
+    <div>
+      <span>password</span>
+      <input type="password" name="" id="pass" />
+    </div>
+    <input id="login" type="button" value="Login" />
+
+    <div>
+      <span id="logged in"></span>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $("#login").click(function() {
+        // vanilla
+        // var user = document.getElementById("user").value;
+        // var pass = document.getElementById("pass").value;
+
+        //jquery
+        var user = $("#user").val();
+        var pass = $("#pass").val();
+
+        $.ajax({
+          type: "POST",
+          url: "http://localhost:5000/login",
+          contentType: "application/json",
+          success: onSuccess,
+          data: JSON.stringify({ username: user, password: pass })
+        });
+      });
+
+      function onSuccess(res) {
+        localStorage.setItem("logStatus", res.logStatus);
+        localStorage.setItem("username", res.username);
+
+        if (localStorage.getItem("logStatus") == "success") {
+          window.location.href = "/account.html";
+        } else {
+          window.location.href = "/error.html";
+        }
+      }
+    </script>
+  </body>
+</html>
